@@ -1,0 +1,71 @@
+body{
+    font-family: 'Poppins', sans-serif;
+    background-color: #edd263;
+}
+.navbar{
+    background-color: #edd263 !important;
+}
+#search-meal-div{
+    display: flex;
+    justify-content: center;
+}
+.btn-success{
+    background-color: #3b2d64;
+    width: 100px;
+}
+input{
+    height: 60px;
+}
+.search-box-with-icon{
+    width: 500px;
+    position: relative;
+}
+.search-box-with-icon .fa-search{
+    position: absolute;
+    padding: 22px;
+    pointer-events: none;
+    left: 0;
+    color: gray;
+}
+
+.search-box-with-icon input{
+    padding-left:  50px;
+}
+.meal-div{
+    border-radius: 5px;
+    padding: 0px;
+    text-align: center;
+    width: 250px;
+    background-color: white;
+}
+.meal-div h6{
+    margin: 20px;
+    font-weight: bold;
+}
+#meals-div{
+    display: grid;
+    grid-template-columns: repeat(4, 2fr);
+    grid-gap: 30px;
+}
+
+#meals-div img{
+    width: 250px;
+    height: 220px;
+}
+#single-meal-details-div img{
+    width: 400px;
+    height: 300px;
+}
+#single-meal-details-div{
+    width: 400px;
+    background-color: white;
+}
+li{
+    list-style: none;
+}
+.fa-check-circle{
+    color: #3b2d64;
+}
+#single-meal-details-div p{
+    margin-left: 10px;
+}
