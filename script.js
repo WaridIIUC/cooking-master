@@ -1,37 +1,33 @@
-
-const searchButton = document.getElementById("search-button");
+const searchButton = document.getElementById("search-button");              //get search button
 searchButton.addEventListener("click", function () {
-    const searchMeal = document.getElementById("search-input").value;
-    loadData(searchMeal);
+    const searchedMeal = document.getElementById("search-input").value;     //get searched meal
+    loadAllSearchedMealData(searchedMeal);                                  //pass searched meal for fetched data
 })
 
-const loadData = searchedMeal => {
-    const searchWarning = document.getElementById("search-warning-h1");
-    searchWarning.innerText = "";
-    fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${searchedMeal}`)
+const loadAllSearchedMealData = searchedMeal => {
+    clearSearchedElement();                                                 //call this function for clear previous search
+    fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${searchedMeal}`)   //fetch all searched meal data
         .then(res => res.json())
         .then(data => {
-            displayMeals(data.meals);
+            displayMeals(data.meals);                                       //call this function to display searched meals data by passing data
         })
-        .catch(error => {
+        .catch(error => {               
+            const searchWarning = document.getElementById("search-warning-h1");
             searchWarning.innerText = "No searched Result found!";
-            const singleMealDiv = document.getElementById("single-meal-details-div");
-            singleMealDiv.innerHTML ="";
+            hideElement("single-meal-details-div");
         })
 }
 
 
 const displayMeals = meals => {
-    const mealsDiv = document.getElementById("meals-div");
-    mealsDiv.innerHTML = "";
-    const searchInput = document.getElementById("search-input");
-    searchInput.value = "";
-    for (let i = 0; i < meals.length; i++) {
-        const meal = meals[i];
+    const mealsDiv = document.getElementById("all-searched-meals-display-div");
+    hideElement("all-searched-meals-display-div");
+    hideElement("single-meal-details-div");
+    meals.forEach(meal => {
         const mealDiv = document.createElement("div");
         mealDiv.className = "meal-div";
         mealDiv.onclick = event => {
-        getSingleMealId(meal.idMeal);  
+            getSingleMealId(meal.idMeal);  
         }
         const mealInfo = `
             <img src = "${meal.strMealThumb}" class="rounded-top"/>
@@ -39,29 +35,22 @@ const displayMeals = meals => {
         `
         mealDiv.innerHTML = mealInfo;
         mealsDiv.append(mealDiv);
-        //console.log(meal);
-    }
+    });
 }
 
 
 
 const getSingleMealId = mealId => {
     const fetchApi = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealId}`;
-    loadData2(fetchApi);
+    loadSingleMealData(fetchApi);
 }
 
-const loadData2 =  fetchApi => {
+const loadSingleMealData =  fetchApi => {
     fetch(fetchApi)
         .then(res => res.json())
         .then(data => {
             displaySingleMealInfo(data.meals[0]);
         })
-        .catch(error => {
-            alert("hello");
-            const searchWarning = document.getElementById("search-warning-h1");
-            searchButton.innerText = "No searched Result found!";
-        })
-
 }
 
 const displaySingleMealInfo = meal => {
@@ -110,4 +99,16 @@ const getAllIngredients = meal => {
     ingredientList.push(meal.strMeasure19 + " " + meal.strIngredient19);
     ingredientList.push(meal.strMeasure20 + " " + meal.strIngredient20);
     return ingredientList;
+}
+
+const hideElement = elementId => {
+    const element = document.getElementById(elementId);
+    element.innerHTML ="";
+}
+
+const clearSearchedElement = () => {
+    const searchWarning = document.getElementById("search-warning-h1");     //get search warning h1 for show warning if no search found
+    searchWarning.innerText = "";                                        //erase previous warning 
+    const searchInput = document.getElementById("search-input");            //search input box
+    searchInput.value = "";                                                 //clear previous searched meal
 }
