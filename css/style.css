@@ -27,7 +27,6 @@ input{
     left: 0;
     color: gray;
 }
-
 .search-box-with-icon input{
     padding-left:  50px;
 }
@@ -47,7 +46,6 @@ input{
     grid-template-columns: repeat(4, 2fr);
     grid-gap: 30px;
 }
-
 #all-searched-meals-display-div img{
     width: 250px;
     height: 220px;
@@ -58,8 +56,7 @@ input{
 }
 #single-meal-details-div{
     width: 400px;
-    background-color: white;
-    
+    background-color: white; 
 }
 li{
     list-style: none;
@@ -70,4 +67,36 @@ li{
 #single-meal-details-div p, h3{
     margin-left: 20px;
     font-weight: bold;
+}
+
+@media only screen and (max-width: 420px){
+    #all-searched-meals-display-div{
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        grid-gap: 30px;
+    }
+    .meal-div{
+        border-radius: 5px;
+        padding: 0px;
+        text-align: center;
+        width: 250px;
+        background-color: white;
+        margin:auto;
+    }
+    
+}
+@media only screen and (max-width: 768px){
+    #all-searched-meals-display-div{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 30px;
+    }
+    .meal-div{
+        border-radius: 5px;
+        padding: 0px;
+        text-align: center;
+        width: 250px;
+        background-color: white;
+        margin:auto;
+    }
 }

@@ -11,61 +11,58 @@ const loadAllSearchedMealData = searchedMeal => {
         .then(data => {
             displayMeals(data.meals);                                       //call this function to display searched meals data by passing data
         })
-        .catch(error => {               
-            const searchWarning = document.getElementById("search-warning-h1");
-            searchWarning.innerText = "No searched Result found!";
-            hideElement("single-meal-details-div");
+        .catch(error => {                                                   //catch for if there has no searched result
+            const searchWarning = document.getElementById("search-warning-h1");     //get warning h1 
+            searchWarning.innerText = "No searched Result found!";                  //give a warning message
+            hideElement("single-meal-details-div");                         //hide previous single meal info.
         })
 }
 
-
-const displayMeals = meals => {
-    const mealsDiv = document.getElementById("all-searched-meals-display-div");
-    hideElement("all-searched-meals-display-div");
-    hideElement("single-meal-details-div");
-    meals.forEach(meal => {
-        const mealDiv = document.createElement("div");
+const displayMeals = meals => {                                             //function for display all searched meal info
+    const mealsDiv = document.getElementById("all-searched-meals-display-div"); //get parent div where other child append
+    hideElement("all-searched-meals-display-div");                       //hide previous all searched meal.  
+    hideElement("single-meal-details-div");                         //hide previous single meal info.
+    meals.forEach(meal => {                                         //loop start to add each div & elements
+        const mealDiv = document.createElement("div");              //child div for meal
         mealDiv.className = "meal-div";
-        mealDiv.onclick = event => {
-            getSingleMealId(meal.idMeal);  
+        mealDiv.onclick = event => {                                //add onclick event each meal div by idMeal
+            getSingleMealId(meal.idMeal);                           //call this function to display single meal info & pass idMeal
         }
         const mealInfo = `
             <img src = "${meal.strMealThumb}" class="rounded-top"/>
             <h6>${meal.strMeal}</h6>
         `
         mealDiv.innerHTML = mealInfo;
-        mealsDiv.append(mealDiv);
+        mealsDiv.append(mealDiv);                   
     });
 }
 
-
-
-const getSingleMealId = mealId => {
+const getSingleMealId = mealId => {                                     
     const fetchApi = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealId}`;
-    loadSingleMealData(fetchApi);
+    loadSingleMealData(fetchApi);                                       //call function for load single meal info
 }
 
 const loadSingleMealData =  fetchApi => {
     fetch(fetchApi)
         .then(res => res.json())
         .then(data => {
-            displaySingleMealInfo(data.meals[0]);
+            displaySingleMealInfo(data.meals[0]);                   //pass meals[0] to display single meal info
         })
 }
 
 const displaySingleMealInfo = meal => {
     const singleMealInfo = meal;
-    const singleMealDetailsDiv = document.getElementById("single-meal-details-div");
+    const singleMealDetailsDiv = document.getElementById("single-meal-details-div");     //get parent div
     const mealInfo = `
             <img src = "${singleMealInfo.strMealThumb}" class="rounded-top"/>
             <h3 class="p-4">${singleMealInfo.strMeal}</h3>
             <p>Ingredients</p>
         `
     singleMealDetailsDiv.innerHTML = mealInfo;
-    const ingredients = getAllIngredients(singleMealInfo);
-    console.log(ingredients);
-    const ul = document.createElement("ul");
+    const ingredients = getAllIngredients(singleMealInfo);          //get all ingredients & measures in an array
+    const ul = document.createElement("ul");                        
     ingredients.forEach(ingredient => {
+                                                //check if any ingredients is empty or null
         if(ingredient != "null null" && ingredient != "null " && ingredient != " null" && ingredient.length > 2){
             const li = document.createElement("li");
             li.innerHTML = `<i class="fas fa-check-circle"></i> ${ingredient}`;
@@ -73,10 +70,9 @@ const displaySingleMealInfo = meal => {
         }  
     });
     singleMealDetailsDiv.appendChild(ul);
-
 }
 
-const getAllIngredients = meal => {
+const getAllIngredients = meal => {             //this function used for make all ingredients & measures of specific meal 
     const ingredientList = [];
     ingredientList.push(meal.strMeasure1 + " " + meal.strIngredient1);
     ingredientList.push(meal.strMeasure2 + " " + meal.strIngredient2);
@@ -101,7 +97,7 @@ const getAllIngredients = meal => {
     return ingredientList;
 }
 
-const hideElement = elementId => {
+const hideElement = elementId => {          //call this function to hide specific element by pass it's id 
     const element = document.getElementById(elementId);
     element.innerHTML ="";
 }
