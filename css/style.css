@@ -68,35 +68,3 @@ li{
     margin-left: 20px;
     font-weight: bold;
 }
-
-@media only screen and (max-width: 420px){
-    #all-searched-meals-display-div{
-        display: grid;
-        grid-template-columns: repeat(1, 1fr);
-        grid-gap: 30px;
-    }
-    .meal-div{
-        border-radius: 5px;
-        padding: 0px;
-        text-align: center;
-        width: 250px;
-        background-color: white;
-        margin:auto;
-    }
-    
-}
-@media only screen and (max-width: 768px){
-    #all-searched-meals-display-div{
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        grid-gap: 30px;
-    }
-    .meal-div{
-        border-radius: 5px;
-        padding: 0px;
-        text-align: center;
-        width: 250px;
-        background-color: white;
-        margin:auto;
-    }
-}
