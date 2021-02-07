@@ -5,6 +5,9 @@ body{
 .navbar{
     background-color: #edd263 !important;
 }
+#logo{
+    width: 40% !important;
+}
 #search-meal-div{
     display: flex;
     justify-content: center;
