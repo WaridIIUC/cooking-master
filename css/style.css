@@ -39,6 +39,7 @@ input{
     text-align: center;
     width: 250px;
     background-color: white;
+    margin: auto;
 }
 .meal-div h6{
     margin: 20px;

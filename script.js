@@ -5,17 +5,20 @@ searchButton.addEventListener("click", function () {
 })
 
 const loadAllSearchedMealData = searchedMeal => {
-    clearSearchedElement();                                                 //call this function for clear previous search
-    fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${searchedMeal}`)   //fetch all searched meal data
+    if(searchedMeal != ""){
+        clearSearchedElement();                                                 //call this function for clear previous search
+        fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${searchedMeal}`)   //fetch all searched meal data
         .then(res => res.json())
         .then(data => {
             displayMeals(data.meals);                                       //call this function to display searched meals data by passing data
         })
         .catch(error => {                                                   //catch for if there has no searched result
-            const searchWarning = document.getElementById("search-warning-h1");     //get warning h1 
-            searchWarning.innerText = "No searched Result found!";                  //give a warning message
-            hideElement("single-meal-details-div");                         //hide previous single meal info.
+            displayWarning("No searched Result found!");                    //give a warning message by passing message to display warning function
         })
+    }
+    else{
+        displayWarning("Please write your food on Search");
+    }
 }
 
 const displayMeals = meals => {                                             //function for display all searched meal info
@@ -95,6 +98,13 @@ const getAllIngredients = meal => {             //this function used for make al
     ingredientList.push(meal.strMeasure19 + " " + meal.strIngredient19);
     ingredientList.push(meal.strMeasure20 + " " + meal.strIngredient20);
     return ingredientList;
+}
+
+const displayWarning = warningMessage => {
+    const searchWarning = document.getElementById("search-warning-h1");     //get warning h1 
+    searchWarning.innerText = warningMessage;
+    hideElement("all-searched-meals-display-div");                       //hide previous all searched meal.  
+    hideElement("single-meal-details-div");                                 //hide previous single meal info.
 }
 
 const hideElement = elementId => {          //call this function to hide specific element by pass it's id 
